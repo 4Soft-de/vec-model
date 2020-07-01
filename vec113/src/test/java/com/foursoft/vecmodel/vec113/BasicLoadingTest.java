@@ -25,6 +25,7 @@
  */
 package com.foursoft.vecmodel.vec113;
 
+import com.foursoft.vecmodel.vec113.visitor.ToStringVisitor;
 import com.foursoft.xml.model.Identifiable;
 import com.foursoft.vecmodel.vec113.common.EventConsumer;
 import com.foursoft.xml.ExtendedUnmarshaller;
@@ -34,6 +35,7 @@ import org.w3c.dom.Document;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBException;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Source;
@@ -44,6 +46,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -123,6 +126,95 @@ public class BasicLoadingTest {
         try (final InputStream inputStream = TestFiles.getInputStream(TestFiles.SAMPLE_VEC)) {
             final VecContent content = VecReader.read(inputStream);
             assertThat(content).isNotNull();
+        }
+    }
+
+    @Test
+    public void testVisitor() throws IOException {
+        try (final InputStream inputStream = TestFiles.getInputStream(TestFiles.SAMPLE_VEC)) {
+            final VecContent rootElement = VecReader.read(inputStream);
+            final ToStringVisitor toStringVisitor = new ToStringVisitor();
+
+            final String vecVersion = rootElement.getVecVersion();
+            final String generatingSystemName = rootElement.getGeneratingSystemName();
+            final XMLGregorianCalendar dateOfCreation = rootElement.getDateOfCreation();
+            final String generatingSystemVersion = rootElement.getGeneratingSystemVersion();
+
+            final VecCopyrightInformation standardCopyright = rootElement.getStandardCopyrightInformation();
+            final String copyrightNotesAsString = standardCopyright == null
+                    ? "None"
+                    : standardCopyright.accept(toStringVisitor);
+
+            final List<VecConformanceClass> compliantConformanceClasses = rootElement.getCompliantConformanceClasses();
+            final String compliantConformanceClassesAsString = compliantConformanceClasses.stream()
+                    .map(conformanceClass -> '\t' + conformanceClass.accept(toStringVisitor))
+                    .collect(Collectors.joining(System.lineSeparator()));
+
+            final List<VecContract> contracts = rootElement.getContracts();
+            final String contractsAsString = contracts.stream()
+                    .map(contract -> '\t' + contract.accept(toStringVisitor))
+                    .collect(Collectors.joining(System.lineSeparator()));
+
+            final List<VecCopyrightInformation> copyrightInformations = rootElement.getCopyrightInformations();
+            final String copyrightInformationAsString = copyrightInformations.stream()
+                    .map(copyrightInformation -> '\t' + copyrightInformation.accept(toStringVisitor))
+                    .collect(Collectors.joining(System.lineSeparator()));
+
+            final List<VecDocumentVersion> documentVersions = rootElement.getDocumentVersions();
+            final String documentVersionsAsString = documentVersions.stream()
+                    .map(documentVersion -> '\t' + documentVersion.accept(toStringVisitor))
+                    .collect(Collectors.joining(System.lineSeparator()));
+
+            final StringBuilder builder = new StringBuilder()
+                    .append("VEC Version: ").append(vecVersion).append(System.lineSeparator())
+                    .append("System name: ").append(generatingSystemName).append(System.lineSeparator())
+                    .append("System version: ").append(generatingSystemVersion).append(System.lineSeparator())
+                    .append("Date of creation: ").append(dateOfCreation).append(System.lineSeparator())
+                    .append("Standard copyright: ").append(copyrightNotesAsString)
+                    .append(System.lineSeparator());
+
+            builder.append("Conformance classes:");
+            if (compliantConformanceClassesAsString.isEmpty())  {
+                builder.append(" None");
+            }  else {
+                builder
+                        .append(System.lineSeparator())
+                        .append(compliantConformanceClassesAsString);
+            }
+            builder.append(System.lineSeparator());
+
+            builder.append("Contracts:");
+            if (contractsAsString.isEmpty())  {
+                builder.append(" None");
+            }  else {
+                builder
+                        .append(System.lineSeparator())
+                        .append(contractsAsString);
+            }
+            builder.append(System.lineSeparator());
+
+            builder.append("Copyright information:");
+            if (copyrightInformationAsString.isEmpty())  {
+                builder.append(" None");
+            }  else {
+                builder
+                        .append(System.lineSeparator())
+                        .append(copyrightInformationAsString);
+            }
+            builder.append(System.lineSeparator());
+
+            builder.append("Document versions:");
+            if (documentVersionsAsString.isEmpty())  {
+                builder.append(" None");
+            }  else {
+                builder
+                        .append(System.lineSeparator())
+                        .append(documentVersionsAsString);
+            }
+
+            final String output = builder.toString();
+
+            System.out.println(output);
         }
     }
 
