@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.foursoft.vecmodel</groupId>
         <artifactId>vec-parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
     </parent>
     <artifactId>vec120</artifactId>
 
@@ -17,11 +17,15 @@
             <groupId>com.foursoft.jaxb2</groupId>
             <artifactId>navigation-extender-runtime</artifactId>
         </dependency>
-
-        <!--general-->
         <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!--logging-->
@@ -29,26 +33,28 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jul-to-slf4j</artifactId>
-        </dependency>
 
         <!-- test -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -57,55 +63,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <addMavenDescriptor>false</addMavenDescriptor>
-                    </archive>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <extension>true</extension>
-
-                    <plugins>
-                        <plugin>
-                            <groupId>org.jvnet.jaxb2_commons</groupId>
-                            <artifactId>jaxb2-basics</artifactId>
-                            <version>1.11.1</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.jvnet.jaxb2_commons</groupId>
-                            <artifactId>jaxb2-basics-annotate</artifactId>
-                            <version>1.0.4</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.cxf.xjcplugins</groupId>
-                            <artifactId>cxf-xjc-javadoc</artifactId>
-                            <version>3.2.1</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>net.codesup.util</groupId>
-                            <artifactId>jaxb-delegate-plugin</artifactId>
-                            <version>2.1.0</version>
-                        </plugin>
-                        <!-- using a locally patched version due to incorrect handling of IDREF(S)
-                            properties a pull request was published to offical version. If this is merged
-                            an released, the current version can be used. see: https://github.com/massfords/jaxb-visitor/pull/13 -->
-                        <plugin>
-                            <groupId>com.massfords</groupId>
-                            <artifactId>jaxb-visitor</artifactId>
-                            <version>2.8</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>com.foursoft.jaxb2</groupId>
-                            <artifactId>navigation-extender</artifactId>
-                            <version>${navigation-extender.version}</version>
-                        </plugin>
-                    </plugins>
-                </configuration>
                 <executions>
                     <execution>
                         <id>generate-vec120</id>
@@ -114,6 +75,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <encoding>UTF-8</encoding>
                             <schemaIncludes>
                                 <include>vec120/vec_1.2.1.RC-SNAPSHOT.xsd</include>
                             </schemaIncludes>
@@ -137,8 +99,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
         </plugins>
     </build>
 </project>
