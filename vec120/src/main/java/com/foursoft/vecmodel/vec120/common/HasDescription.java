@@ -41,7 +41,7 @@ public interface HasDescription {
      *
      * @return {@link List } of {@link VecAbstractLocalizedString } including all description objects.
      */
-    List<VecAbstractLocalizedString> getDescriptions();
+    List<? extends VecAbstractLocalizedString> getDescriptions();
 
     /**
      * This method returns a {@link List } of all typed descriptions of this element, filtered by the given
@@ -64,7 +64,7 @@ public interface HasDescription {
      * @return {@link List } of {@link VecAbstractLocalizedString } including all description objects with the
      * given {@link VecLanguageCode }.
      */
-    default List<VecAbstractLocalizedString> getDescriptions(VecLanguageCode languageCode){
+    default List<? extends VecAbstractLocalizedString> getDescriptions(VecLanguageCode languageCode){
         return getDescriptions().stream()
                 .filter(typedString -> typedString.getLanguageCode() == languageCode)
                 .collect(Collectors.toList());
