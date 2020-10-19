@@ -59,7 +59,7 @@ don't break the format, so the diffs only contain the real changes.
 - Only use the lowest visibility modifier (public, protected, package, private) possible. 
 - JavaDoc for public method is required, for the rest its optional.
 
-For your information, we will **squash merge** your pull request into the project to make the commits list  as short as possible (linear history).
+For your information, we will **squash merge** your pull request into the project to make the commits list as short as possible (linear history).
 
 #### Example
 ##### Bad
