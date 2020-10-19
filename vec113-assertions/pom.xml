@@ -20,7 +20,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
+            <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-core</artifactId>
             <scope>provided</scope>
         </dependency>
