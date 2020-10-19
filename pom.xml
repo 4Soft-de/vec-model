@@ -149,7 +149,7 @@
             <dependency>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin-testing</artifactId>
-                <version>${maven-jaxb2-plugin-testing.version}</version>
+                <version>${maven-jaxb2-plugin.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -313,6 +313,7 @@
                 <plugin>
                     <groupId>org.jvnet.jaxb2.maven2</groupId>
                     <artifactId>maven-jaxb2-plugin</artifactId>
+                    <version>${maven-jaxb2-plugin.version}</artifactId>
                     <configuration>
                         <encoding>UTF-8</encoding>
                         <extension>true</extension>
