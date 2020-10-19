@@ -313,7 +313,7 @@
                 <plugin>
                     <groupId>org.jvnet.jaxb2.maven2</groupId>
                     <artifactId>maven-jaxb2-plugin</artifactId>
-                    <version>${maven-jaxb2-plugin.version}</artifactId>
+                    <version>${maven-jaxb2-plugin.version}</version>
                     <configuration>
                         <encoding>UTF-8</encoding>
                         <extension>true</extension>
