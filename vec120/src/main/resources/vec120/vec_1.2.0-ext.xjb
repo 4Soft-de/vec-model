@@ -25,7 +25,15 @@
     </jxb:bindings>
 
     <jxb:bindings multiple="true" node="//xs:complexType[.//xs:element[@name='Description']]">
-        <inheritance:implements>com.foursoft.vecmodel.vec120.common.HasDescription</inheritance:implements>
+        <inheritance:implements>com.foursoft.vecmodel.vec120.common.HasDescription&lt;com.foursoft.vecmodel.vec120.VecLanguageCode&gt;</inheritance:implements>
+    </jxb:bindings>
+
+    <jxb:bindings multiple="true" node="//xs:complexType[@name='AbstractLocalizedString']">
+        <inheritance:implements>com.foursoft.vecmodel.vec120.common.HasLocalizedString</inheritance:implements>
+    </jxb:bindings>
+
+    <jxb:bindings multiple="true" node="//xs:complexType[@name='LocalizedTypedString']">
+        <inheritance:implements>com.foursoft.vecmodel.vec120.common.HasLocalizedTypeString</inheritance:implements>
     </jxb:bindings>
 
     <jxb:bindings node="//xs:complexType[@name='DocumentVersion']">
