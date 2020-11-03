@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  * =========================LICENSE_END==================================
  */
-package com.foursoft.vecmodel.vec120.common;
+package com.foursoft.vecmodel.common;
 
 import java.util.List;
 import java.util.stream.Collectors;
