@@ -52,6 +52,7 @@
         <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
         <sonar.organization>4soft-de</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
         <!-- a work around for https://youtrack.jetbrains.com/issue/IDEA-204155 -->
         <test.args>-Xms6g -Denable.write.protection=true -Ddebug.enabled=false -Dfile.encoding=UTF-8 -Djdk.attach.allowAttachSelf</test.args>
@@ -60,6 +61,7 @@
         <skipTests>false</skipTests>
         <skipITs>${skipTests}</skipITs>
         <skipUTs>${skipTests}</skipUTs>
+
 
     </properties>
 
