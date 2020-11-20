@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * vec113
+ * vec-common
  * %%
  * Copyright (C) 2020 4Soft GmbH
  * %%
@@ -23,18 +23,17 @@
  * THE SOFTWARE.
  * =========================LICENSE_END==================================
  */
-package com.foursoft.vecmodel.common.delegate;
+package com.foursoft.vecmodel.common;
+
+import com.foursoft.vecmodel.common.util.DelegationUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class DelegationUtils {
+public interface HasSpecifications<X> {
 
-    public static <T extends X, X> List<T> getFromListWithType(final List<X> source, final Class<T> type) {
-        return source.stream()
-                .filter(type::isInstance)
-                .map(type::cast)
-                .collect(Collectors.toList());
+    List<X> getSpecifications();
+
+    default <T extends X> List<T> getSpecificationsWithType(final Class<T> type) {
+        return DelegationUtils.getFromListWithType(getSpecifications(), type);
     }
-
 }

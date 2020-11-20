@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * vec113
+ * vec-common
  * %%
  * Copyright (C) 2020 4Soft GmbH
  * %%
@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,24 +23,17 @@
  * THE SOFTWARE.
  * =========================LICENSE_END==================================
  */
-package com.foursoft.vecmodel.vec113.delegate;
+package com.foursoft.vecmodel.common;
 
-import com.foursoft.vecmodel.common.delegate.DelegationUtils;
-import com.foursoft.vecmodel.vec113.VecOccurrenceOrUsage;
-import com.foursoft.vecmodel.vec113.VecRole;
+import com.foursoft.vecmodel.common.util.DelegationUtils;
 
 import java.util.List;
 
-public class VecOccurrenceOrUsageDelegate {
+public interface HasRoles<X> {
 
-    private final VecOccurrenceOrUsage vecOccurrenceOrUsage;
+    List<X> getRoles();
 
-    public VecOccurrenceOrUsageDelegate(final VecOccurrenceOrUsage vecOccurrenceOrUsage) {
-        this.vecOccurrenceOrUsage = vecOccurrenceOrUsage;
+    default <T extends X> List<T> getRolesWithType(final Class<T> type) {
+        return DelegationUtils.getFromListWithType(getRoles(), type);
     }
-
-    public <T extends VecRole> List<T> getRolesWithType(final Class<T> type) {
-        return DelegationUtils.getFromListWithType(vecOccurrenceOrUsage.getRoles(), type);
-    }
-
 }

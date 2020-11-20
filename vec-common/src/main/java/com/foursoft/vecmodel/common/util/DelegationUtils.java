@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * vec120
+ * vec113
  * %%
  * Copyright (C) 2020 4Soft GmbH
  * %%
@@ -23,24 +23,18 @@
  * THE SOFTWARE.
  * =========================LICENSE_END==================================
  */
-package com.foursoft.vecmodel.vec120.delegate;
-
-import com.foursoft.vecmodel.common.delegate.DelegationUtils;
-import com.foursoft.vecmodel.vec120.VecOccurrenceOrUsage;
-import com.foursoft.vecmodel.vec120.VecRole;
+package com.foursoft.vecmodel.common.util;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class VecOccurrenceOrUsageDelegate {
+public class DelegationUtils {
 
-    private final VecOccurrenceOrUsage vecOccurrenceOrUsage;
-
-    public VecOccurrenceOrUsageDelegate(final VecOccurrenceOrUsage vecOccurrenceOrUsage) {
-        this.vecOccurrenceOrUsage = vecOccurrenceOrUsage;
-    }
-
-    public <T extends VecRole> List<T> getRolesWithType(final Class<T> type) {
-        return DelegationUtils.getFromListWithType(vecOccurrenceOrUsage.getRoles(), type);
+    public static <T extends X, X> List<T> getFromListWithType(final List<X> source, final Class<T> type) {
+        return source.stream()
+                .filter(type::isInstance)
+                .map(type::cast)
+                .collect(Collectors.toList());
     }
 
 }
