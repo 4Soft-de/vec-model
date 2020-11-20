@@ -42,6 +42,21 @@ Latest Version: [![Maven Central](https://maven-badges.herokuapp.com/maven-centr
 
 **Make sure to replace the `VERSION` below with a real version as the one shown above!**
 
+### VEC COMMON
+Include the shared code for VEC 1.1.3 and VEC 1.2.0.
+#### Maven
+```xml
+<dependency>
+    <groupId>com.foursoft.vecmodel</groupId>
+    <artifactId>vec-common</artifactId>
+    <version>VERSION</version>
+</dependency>
+```
+#### Gradle
+```groovy
+implementation group: 'com.foursoft.vecmodel', name: 'vec-common', version: 'VERSION'
+```
+
 ### VEC 1.1.3
 #### Maven
 ```xml
@@ -147,7 +162,7 @@ More examples can be found in the examples of each module:
 public class MyVecReader {
     public void readVecFile(final String pathToFile) throws JAXBException, IOException  {
         try (final InputStream is = MyVecReader.class.getResourceAsStream(pathToFile)) {
-            final VecReader localReader = VecReader.getLocalReader();
+            final VecReader localReader = new VecReader();
             final JaxbModel<VecContent, Identifiable> model = localReader.readModel(is);
     
             final VecApproval approval = model.getIdLookup()
@@ -201,7 +216,7 @@ public class MyVecWriter {
         root.getDocumentVersions().add(documentVersion);
         root.getPartVersions().add(partVersion);
 
-        final VecWriter localWriter = VecWriter.getLocalWriter();
+        final VecWriter localWriter = new VecWriter();
 
         try (final FileOutputStream outputStream = new FileOutputStream(target)) {
             localWriter.write(root, outputStream);
