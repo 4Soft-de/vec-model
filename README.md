@@ -42,21 +42,6 @@ Latest Version: [![Maven Central](https://maven-badges.herokuapp.com/maven-centr
 
 **Make sure to replace the `VERSION` below with a real version as the one shown above!**
 
-### VEC COMMON
-Include the shared code for VEC 1.1.3 and VEC 1.2.0.
-#### Maven
-```xml
-<dependency>
-    <groupId>com.foursoft.vecmodel</groupId>
-    <artifactId>vec-common</artifactId>
-    <version>VERSION</version>
-</dependency>
-```
-#### Gradle
-```groovy
-implementation group: 'com.foursoft.vecmodel', name: 'vec-common', version: 'VERSION'
-```
-
 ### VEC 1.1.3
 #### Maven
 ```xml
