@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
+   This file is provided under the terms of the MIT license reproduced here.
+   Copyright © 2021 prostep ivip association
+   
+   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+   The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
    Generated Schema from VEC model. Changelog can be found at https://track.prostep.com/browse/KBLFRM.
    Attention: If this is a SNAPSHOT version, then this schema is produced by a nightly or preview build, 
    is NO OFFICIAL RELEASE and can change at any time.
 
-   Version:   1.2.0
-   Revision:  9c735b2c0f3b93b4bd4ae34c3a7a5d345a78916d
-   Timestamp: 2020-05-11
+   Version:   1.2.1
+   Revision:  3c7be4ba601faaada57777495822232e77aa49ac
+   Timestamp: 2021-10-15
    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -            
-        -->
+-->
 <xs:schema xmlns:vec="http://www.prostep.org/ecad-if/2011/vec"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="http://www.prostep.org/ecad-if/2011/vec"
-           version="1.2.0">
+           version="1.2.1">
    <xs:element name="VecContent" type="vec:VecContent"/>
    <xs:complexType name="AbstractLocalizedString" abstract="true">
       <xs:annotation>
@@ -9511,19 +9517,22 @@
             <p>Specification for the definition of TopologyZones.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:sequence>
-         <xs:element name="Zone"
-                     type="vec:TopologyZone"
-                     minOccurs="0"
-                     maxOccurs="unbounded">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Specifies the<i>TopologyZones</i>that are part of the<i>TopologyZoneSpecification</i>.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:element>
-      </xs:sequence>
-      <xs:attribute name="id" type="xs:ID" use="required"/>
+      <xs:complexContent>
+         <xs:extension base="vec:Specification">
+            <xs:sequence>
+               <xs:element name="Zone"
+                           type="vec:TopologyZone"
+                           minOccurs="0"
+                           maxOccurs="unbounded">
+                  <xs:annotation>
+                     <xs:documentation xml:lang="en">
+                        <p>Specifies the<i>TopologyZones</i>that are part of the<i>TopologyZoneSpecification</i>.</p>
+                     </xs:documentation>
+                  </xs:annotation>
+               </xs:element>
+            </xs:sequence>
+         </xs:extension>
+      </xs:complexContent>
    </xs:complexType>
    <xs:complexType name="Transformation2D">
       <xs:annotation>
@@ -11227,15 +11236,7 @@
       <xs:attribute name="id" type="xs:ID" use="required"/>
    </xs:complexType>
    <xs:simpleType name="AliasIdentificationType">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="UUID">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines that this AliasIdentification represents a "Universally Unique Identifier". Although a UUID is technical definition of a 128-Bit number, the primary relevance of this type is not its technical representation, but it's other properties. An AliasIdentification with the type "UUID" of an element is its unique identifier, that is constant over time, never changes and is never reused for other elements. Such an AliasIdentification can be used to trace elements through different systems, companies and processes.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="AnchorType">
       <xs:annotation>
@@ -11277,22 +11278,7 @@
             <p>Enumeration to define the state of the content of the baseline in regard of its defined scope.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Partial">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A partial baseline does not contain all elements of the final scope of the baseline (e.g. it is a baseline created during the development process).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Complete">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A complete baseline contains<u>all</u>elements of the final scope of the baseline.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="BaselineState">
       <xs:annotation>
@@ -11300,22 +11286,7 @@
             <p>Enumeration the define the valid states of a baseline.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Draft">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Draft means that the baseline is not finalized yet and new ItemVersions can be added without the necessity to create a new version of the baseline itself.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Frozen">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Frozen means that the baseline is finalized and new ItemVersions<u>must not</u>be added without creating a new version of the baseline itself.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="CableLeadThroughGeometry">
       <xs:annotation>
@@ -11323,11 +11294,7 @@
             <p>Defines valid values for the geometry of a<i>CableLeadThrough</i>in the sealing area.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Square"/>
-         <xs:enumeration value="Circular"/>
-         <xs:enumeration value="Oval"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="CableLeadThroughType">
       <xs:annotation>
@@ -11335,39 +11302,16 @@
             <p>Defines valid types for CableLeadThroughs.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="ShrinkingTube">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="ShrinkingTubeWithSealingGlue"/>
-         <xs:enumeration value="SealingGlue"/>
-         <xs:enumeration value="Overmolded"/>
-         <xs:enumeration value="Foamed"/>
-         <xs:enumeration value="WithSealingComponent">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <i>CableLeadThrough</i>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="CavityGeometry">
       <xs:annotation>
          <xs:documentation xml:lang="en"/>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Square"/>
-         <xs:enumeration value="Circular"/>
-         <xs:enumeration value="Oval"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="CodingName">
-      <xs:restriction base="xs:string">
-         <xs:pattern value="Uncoded|.*"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="ColorReferenceSystem">
       <xs:annotation>
@@ -11375,17 +11319,7 @@
             <p>Defines the literals that shall be used for specific color reference systems.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="IEC 60757">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The literal shall be used for the IEC 60757 "Electrotechnical engineering; code for designation of colours"</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="RAL"/>
-         <xs:enumeration value="RGB"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="ComponentNodeSubType">
       <xs:annotation>
@@ -11393,14 +11327,7 @@
             <p>Defines agreed values for<i>ComponentNodeSubTypes</i>. Not all combinations of<i>ComponentNodeSubTypes</i>and<i>ComponentNodeTypes</i>are semantically correct (e.g. Lamp, Microphone, Speaker, Motor are all Actuators).</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Lamp"/>
-         <xs:enumeration value="Relay"/>
-         <xs:enumeration value="Fuse"/>
-         <xs:enumeration value="Microphone"/>
-         <xs:enumeration value="Speaker"/>
-         <xs:enumeration value="Motor"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="ComponentNodeType">
       <xs:annotation>
@@ -11408,97 +11335,7 @@
             <p>Defines the common agreed values for the types of a ComponentNode.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="ECU">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Sensor">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Actuator">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="CouplingDevice">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="EnergyStorage">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Generator">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="PowerDistribution">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A device that distributes power to other devices (e.g. a fuse box).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Switch">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A "Switch" is a device that can change its internal connectivity in reaction to some external action (e.g. connect / disconnect some pins). A switch has no "active" logic (in contrast to an ECU).</p>
-                  <p> </p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Lamp">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>Deprecated since VEC V1.2.</i>Use ComponentNodeType "Actuator" instead and ComponentSubType<i>Lamp</i>.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Relay">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p> </p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Fuse">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>Deprecated since VEC V1.2.</i>Use instead ComponentSubType Fuse. </p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Ground">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines that this ComponentNode is a grounding point.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="OpenEnd">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines that this ComponentNode is the end point for some unconnected connections that require wires and routings in the resulting harness (e.g. an antenna). A component node of this type is used whenever connections shall not be connected (on one side), regardless if it is an individual wire or a core of a multi core wire.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="OpenLink">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines that this ComponentNode is an OpenLink. In the description of partial systems, it can be necessary to reference a ComponentNode that is not defined in the scope of the partial system (e.g. vehicle infrastructure like power, ground, bus systems). OpenLinks must be resolved and replaced by a determined ComponentNode when a partial system is integrated into a vehicle system.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="ConnectionGroupType">
       <xs:annotation>
@@ -11507,11 +11344,7 @@
             </p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Twisted"/>
-         <xs:enumeration value="Shielded"/>
-         <xs:enumeration value="Coaxial"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="ConnectorOutletDirection">
       <xs:annotation>
@@ -11519,10 +11352,7 @@
             <p>Defines the<i>OutletDirection</i>of a connector for wires.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Straight"/>
-         <xs:enumeration value="Angled"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="ContractRole">
       <xs:annotation>
@@ -11530,25 +11360,13 @@
             <p>Enumeration for the definition of roles a contractor has in a contract.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Oem"/>
-         <xs:enumeration value="Supplier"/>
-         <xs:enumeration value="Manufacturer"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="CurrentType">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="ACOnePhase"/>
-         <xs:enumeration value="ACTwoPhase"/>
-         <xs:enumeration value="ACThreePhase"/>
-         <xs:enumeration value="DC"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="DocumentRelationType">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="ResponsibilityLink"/>
-         <xs:enumeration value="RequirementsLink"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="DocumentType">
       <xs:annotation>
@@ -11559,162 +11377,10 @@
                <i>The content and the degree of information a DocumentType</i>may vary in the different processes.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="BaselineDefinition">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The<i>DocumentVersion</i>represents the definition of a baseline (see<i>BaselineSpecification</i>).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="PartMaster">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Documents of this type describe the master data of a part / component (e.g. a<i>ConnectorHousing</i>, a <i>Terminal</i>, a<i>Wire</i>).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="NetworkArchitecture">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="SystemSchematic">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="WiringDescription">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="HarnessDescription">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Documents of this type contain the description of a<i>Harness </i>(which is for example the scope of the KBL).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="InstallationDescription">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="ManufacturingDescription">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="RequirementsDescription">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A requirements description is some kind of document that contains requirements for a certain part or a group of parts, their design or their properties. A requirements description can be a requirements specification (e.g. REQ-IF) or any other document containing requirements (e.g. a norm).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="ChangeDescription">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="GraphicsSymbol">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Documents of this type represent a graphical symbol (2D), which is normally an external file (e.g. an SVG, PNG). The use case for this document type are symbols that are used in 2D harness and form board drawings.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="GeometryModel">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Documents of this type represent a geometry model (3D), which is normally an external file (e.g. a JT File or some native file of a 3D modelling tool). Typical use cases are for example the models of components (e.g. connectors) used in a 3D model or the 3D visualization of a Harness.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="MasterDataDefinition">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Documents of this type master data definition e.g. list valid<i>UsageNodes</i>or list valid<i>Signals</i>.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="HarnessCoupling">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>DocumentVersions</i>of this type define the coupling information of wiring harnesses in a vehicle network. The<i>DocumentVersion</i>contains the necessary<i>CouplingSpecifications</i>and the<i>PartUsages</i>for the coupling devices.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="SchematicSymbol">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Documents of this type represent a graphical symbol (2D), which is normally an external file (e.g. an SVG, PNG). The use case for this document type are symbols that are used in schematic diagrams.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="NetworkSymbol">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Documents of this type represent a graphical symbol (2D), which is normally an external file (e.g. an SVG, PNG). The use case for this document type are symbols that are used in network / architecture diagrams.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="ComponentDrawing">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>DocumentVersion</i>of this type represent the drawing of a component (Deutsch: Einzelteilezeichnung). Those<i>DocumentVersion</i>are normally used as external reference to the document containing the graphical representation of the component and do not contain<i>Specifications</i>.<i>DocumentVersion</i>describing a component in terms of the VEC (with<i>Specifications</i>) shall have the<i>DocumentType</i>
-                     <i>PartMaster.</i>
-                  </p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="DeviationTable">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Documents that define allowed deviations from specified part numbers.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="FunctionalRequirementType">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="FunctionalSafety">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Functional safety requirements e.g. ASIL Level.</p>
-                  <p> </p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Crash">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Crash requirements e.g. post-crash functionality.</p>
-                  <p> </p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Legal">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Legal Requirements.</p>
-                  <p> </p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Function">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Requirements from a functional point of view (e.g. standby current).</p>
-                  <p> </p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="FuseType">
       <xs:annotation>
@@ -11722,72 +11388,7 @@
             <p>Defines the values for the type a fuse. This is the geometrical type.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Type_SF51">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>also known as: mega</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Type_SF30">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>also known as: midi</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Type_SF">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>also known as: strip</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Type_F">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>also known as: mini</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Type_C">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>also known as: ato</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Type_E">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>also known as: maxi</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Type_A1">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>also known as: jcase</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Type_A1S">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>also known as: flat</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Form_CB15_CatE">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>also known as: auto</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="MITOX"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="GeometryType">
       <xs:annotation>
@@ -11795,22 +11396,7 @@
             <p>Enumeration for the definition of the GeometryType.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Dmu">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The Geometry is a DMU model of the vehicle.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Formboard">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The Geometry is a model of a Formboard.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="HistoryEntryType">
       <xs:annotation>
@@ -11830,15 +11416,7 @@
             </p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="ConnectorHousing"/>
-         <xs:enumeration value="Fuse"/>
-         <xs:enumeration value="Relay"/>
-         <xs:enumeration value="EEComponent"/>
-         <xs:enumeration value="Terminal"/>
-         <xs:enumeration value="RingTerminal"/>
-         <xs:enumeration value="MultiFuse"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="IECPrefix">
       <xs:annotation>
@@ -11907,22 +11485,7 @@
             <p>Enumeration for the definition of the insulation state of the splice.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Insulated">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The splice is electrically insulated.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Uninsulated">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The splice is not electrically insulated.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="LanguageCode">
       <xs:annotation>
@@ -12105,22 +11668,7 @@
             <p>Enumeration for the definition of a LengthClassification.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Designed">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A designed length means that the value is derived automatically in a CAD Tool (e.g. from a 3D Geometry).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Adapted">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>An adapted length means that the value is not the exact value taken from the CAD tool but is adapted in some way. Adapted values are supposed for further use in the process, especially as basis for the product specification. Adapted values are normally created for example by rounding the designed values.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="LevelOfApproval">
       <xs:annotation>
@@ -12128,61 +11676,10 @@
             <p>The LevelOfApproval standardizes the approval levels most engineering processes have in common. See<i>Approval.levelOfApproval</i>for more details.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Planned">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The<i>ItemVersion</i>has been created.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Develop">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>An approval during the development process. There might process specific different approvals out of this category. See Approval.additionalLevelInformation for more information about the details.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Free">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The ItemVersion can be used without restriction.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Restricted">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The Usage of the ItemVersion is restricted in some way. See additionalLevelInformation for more details.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Invalid">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The<i>ItemVersion</i>shall not be used anymore.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="LocalizedTypedStringType">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Title">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The LocalizedTypedString represents a Title in accordance to ISO 7200.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="SupplementaryTitle">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The LocalizedTypedString represents a SupplementaryTitle in accordance to ISO 7200.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="MassInformationSource">
       <xs:annotation>
@@ -12190,29 +11687,7 @@
             <p>Defines possible sources for<i>MassInformations</i>.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Prototype">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A<i>MassInformation</i>with this<i>valueSource</i>has been determined based on a preproduction part.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Series">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A<i>MassInformation</i>with this<i>valueSource</i>has been determined based on a serial production part.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="IMDS">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A<i>MassInformation</i>with this<i>valueSource</i>has been retrieved from the<i>IMDS</i>(see<a href="http://www.mdsystem.com">http://www.mdsystem.com</a>).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="NetworkNodeSubType">
       <xs:annotation>
@@ -12220,14 +11695,7 @@
             <p>Defines agreed values for<i>NetworkNodeSubTypes</i>. Not all combinations of<i>NetworkNodeSubTypes</i>and<i>NetworkNodeTypes</i>are semantically correct (e.g. Lamp, Microphone, Speaker, Motor are all Actuators).</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Lamp"/>
-         <xs:enumeration value="Relay"/>
-         <xs:enumeration value="Fuse"/>
-         <xs:enumeration value="Microphone"/>
-         <xs:enumeration value="Speaker"/>
-         <xs:enumeration value="Motor"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="NetworkNodeType">
       <xs:annotation>
@@ -12235,67 +11703,7 @@
             <p>Defines the common agreed values for the Types of a NetworkNode.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="ECU">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Sensor">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Actuator">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="CouplingDevice">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="EnergyStorage">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Generator">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="PowerDistribution">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A device that distributes power to other devices (e.g. a fuse box).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Switch">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A "Switch" is a device that can change its internal connectivity in reaction to some external action (e.g. connect / disconnect some pins). A switch has no "active" logic (in contrast to an ECU).</p>
-                  <p> </p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="OpenEnd">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines that this NetworkNode is the end point for some unconnected nets that require wires and routings in the resulting harness (e.g. an antenna). A NetworkNode of this type is used whenever nets shall not be connected (on one side).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Ground">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines that this NetworkNode is a grounding point.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="NodeType">
       <xs:annotation>
@@ -12303,78 +11711,10 @@
             <p>Enumeration for the definition of the type of a TopologyNode.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="EndNode">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Electrical components are normally placed on an EndNode.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Junction">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A Junction is a TopologyNode where no electrical component is placed.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Inliner">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>An Inliner is a TopologyNode where one section of the electrical system is connected to another section.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="NominalVoltage">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="12V"/>
-         <xs:enumeration value="24V"/>
-         <xs:enumeration value="48V"/>
-         <xs:enumeration value="HV">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>HV defines all voltages that are dangerous to health or life, regardless if alternating (AC) or direct current (DC). This literal should be used if the concrete class is not known, not defined or not specified.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="HV1">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>HV Class 1 (200V DC)</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="HV2">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>HV Class 2 (300V DC)</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="HV3">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>HV Class 3 (600V DC)</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="HV4">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>HV Class 4 (900V DC)</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="HV5">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>HV Class 5 (1200V DC)</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="OtherUnitName">
       <xs:annotation>
@@ -12394,35 +11734,7 @@
                <i>OpenEnumeration</i>that defines the nature of a<i>PartVersion</i>. The nature specifies how the<i>PartVersion</i>can be used in the different processes or the significance of the<i>PartVersion</i>in the process.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Preliminary">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>Preliminary</i>
-                     <i>PartVersion</i>represent part numbers which are used as place holders for parts that are not yet developed, or which are representing prototype parts that are not allowed in serial production.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Productive">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>Productive</i>
-                     <i>PartVersions</i>represent regular part numbers that are used in serial production.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="CustomerOrder">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>CustomerOrder</i>
-                     <i>PartVersions</i>represent part numbers that are<u>not</u>regularly used in serial production. They are only used to fulfil special customer orders (e.g. an adapter connector for equipment of a special purpose vehicle).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="PartRelationType">
       <xs:annotation>
@@ -12471,10 +11783,7 @@
             <p>E.g. the power supply pin of a power window has "shortTerm" PinApplianceType, in contrast to the head light which is a "long term".</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="ShortTerm"/>
-         <xs:enumeration value="LongTerm"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="PinComponentType">
       <xs:annotation>
@@ -12482,30 +11791,7 @@
             <p>Specifies the type of a<i>PinComponent</i>.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Switch"/>
-         <xs:enumeration value="Coil"/>
-         <xs:enumeration value="Ground"/>
-         <xs:enumeration value="PowerSupply">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>PowerSupply</i>defines a<i>PinComponent</i>that is used to supply the component itself with power (in contrast to<i>PowerDistribution</i>).<i>PinComponentBehaviours</i>of<i>PinComponents</i>with this type always have the<i>SignalDirection</i>
-                     <i>"In</i>".</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="PowerDistribution">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>PowerDistribution</i>defines a<i>PinComponent</i>that is used to distribute power to other components (in contrast to<i>PowerSupply</i>). The semantic of this type depends on the<i>SignalDirection</i>.<i>In</i>means, that this<i>PinComponent</i>is used to supply power to the EEComponent for further distribution to other components.<i>Out</i>means that the<i>PinComponent</i>is a source of power for other EEComponents.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Signal"/>
-         <xs:enumeration value="NotConnected"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="PinCurrentType">
       <xs:annotation>
@@ -12513,37 +11799,7 @@
             <p>Defines the different available current types of a pin.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="MinCurrent"/>
-         <xs:enumeration value="MaxCurrent"/>
-         <xs:enumeration value="TypicalCurrent"/>
-         <xs:enumeration value="StandbyCurrent"/>
-         <xs:enumeration value="InitCurrent"/>
-         <xs:enumeration value="BlockCurrent"/>
-         <xs:enumeration value="StartStopCurrent"/>
-         <xs:enumeration value="OverrunCurrent"/>
-         <xs:enumeration value="LeakageCurrent">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines the current that leaks at this pin.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="DeepSleepCurrent">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines the current on the pin, when the EEComponent is in deep sleep mode.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="ClippingCurrent">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Current at which the output driver of an ECU turns off or limits the current on an output in (a behavior similar to a fuse).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="PinTimingType">
       <xs:annotation>
@@ -12551,14 +11807,7 @@
             <p>Defines the different available timing types of a pin.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="InitTime"/>
-         <xs:enumeration value="StartStopTime"/>
-         <xs:enumeration value="OverrunTime"/>
-         <xs:enumeration value="BlockTime"/>
-         <xs:enumeration value="CurrentPeakDistances"/>
-         <xs:enumeration value="Duration"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="PinType">
       <xs:annotation>
@@ -12566,13 +11815,7 @@
             <p>Defines the type of a pin.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Resistive"/>
-         <xs:enumeration value="Inductive"/>
-         <xs:enumeration value="Capacitive"/>
-         <xs:enumeration value="Optical"/>
-         <xs:enumeration value="Filament"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="PinVoltageType">
       <xs:annotation>
@@ -12580,16 +11823,7 @@
             <p>Defines the different available voltage types of a pin.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="MinVoltage"/>
-         <xs:enumeration value="MaxVoltage"/>
-         <xs:enumeration value="TypicalVoltage"/>
-         <xs:enumeration value="StandbyVoltage"/>
-         <xs:enumeration value="InitVoltage"/>
-         <xs:enumeration value="BlockVoltage"/>
-         <xs:enumeration value="StartStopVoltage"/>
-         <xs:enumeration value="OverrunVoltage"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="PlacementType">
       <xs:annotation>
@@ -12622,13 +11856,7 @@
             <p>Defines valid values for the type of PluggableTerminals. The type defines constraints about the numbers of wire and terminal receptions and their relations.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Standard"/>
-         <xs:enumeration value="Coax"/>
-         <xs:enumeration value="MultiContact"/>
-         <xs:enumeration value="Bridge"/>
-         <xs:enumeration value="PiggyBack"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="PrimaryLockingType">
       <xs:annotation>
@@ -12636,10 +11864,7 @@
             <p>Defines the valid primary locking types for terminals.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Lance"/>
-         <xs:enumeration value="None"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="PrimaryPartType">
       <xs:annotation>
@@ -12698,11 +11923,7 @@
             <p>Specifies the appliance type of a relais.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Soldered"/>
-         <xs:enumeration value="Screwed"/>
-         <xs:enumeration value="Plugged"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="RelaisType">
       <xs:annotation>
@@ -12710,45 +11931,13 @@
             <p>Defines the type of a relais (switching behaviour).</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Normally open">
-            <xs:annotation>
-               <xs:documentation xml:lang="en"/>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Normally closed">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines a relais that is<i>closed</i>in its normal state.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Switch">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines a relais that is a switch.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Bistable">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines a relais that is<i>bistable</i>.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="RobustnessClass">
       <xs:annotation>
          <xs:documentation xml:lang="en"/>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="AmbientTemperature"/>
-         <xs:enumeration value="SolidParticleProtection"/>
-         <xs:enumeration value="LiquidIngressProtection"/>
-         <xs:enumeration value="ImpactProtection"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="RobustnessClassReferenceSystem">
       <xs:annotation>
@@ -12756,50 +11945,7 @@
             <p>Defines the literals that shall be used for specific robustness class reference systems.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="ISO 20653">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The literal that shall be used for the ISO 20653 "Road vehicles - Degrees of protection (IP code) - Protection of electrical equipment against foreign objects, water and access".</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="ISO 6722">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The literal that shall be used for the ISO 6722 "Road vehicles -- 60 V and 600 V single-core cables".</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="LV 112">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The literal that shall be used for the LV 112.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="LV 214">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>OEM Connector Test Specification</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="LV 215">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>OEM Specification for High Voltage contacting.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="LV 312">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Protective systems for wiring harnesses in motor vehicles Hoses</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SealState">
       <xs:annotation>
@@ -12807,22 +11953,7 @@
             <p>Enumeration for the definition of the sealing state of the splice.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Unsealed">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The splice is not waterproof.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Sealed">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The splice is waterproof.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SealingGeometry">
       <xs:annotation>
@@ -12830,13 +11961,7 @@
             <p>Defines valid values of the geometry of a cavity sealing. It defines the cross-section geometry.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Circular"/>
-         <xs:enumeration value="Oval"/>
-         <xs:enumeration value="Square"/>
-         <xs:enumeration value="Segmented"/>
-         <xs:enumeration value="Sectored"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SegmentCrossSectionAreaType">
       <xs:annotation>
@@ -12844,25 +11969,7 @@
             <p>Defines valid values the type of the cross-section area of a<i>TopologySegment</i>, since a<i>TopologySegment</i>can have different cross section areas with different meanings in the process.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Reserved">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>Reserved</i>is the type for cross section areas that define a reserved space in the DMU for the <i>TopologySegment.</i>
-                  </p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Real">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>Real</i>is the type for cross section areas that can be observed for<i>TopologySegments</i>with variants of a Harness that are producible.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SegmentForm">
       <xs:annotation>
@@ -12870,10 +11977,7 @@
             <p>Enumeration for the definition of the SegmentForm.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Circular"/>
-         <xs:enumeration value="NonCircular"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SiPrefix">
       <xs:annotation>
@@ -12943,10 +12047,7 @@
       </xs:restriction>
    </xs:simpleType>
    <xs:simpleType name="SignalCurve">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="ContinuousSignal"/>
-         <xs:enumeration value="DiscreteSignal"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SignalDirection">
       <xs:annotation>
@@ -12961,121 +12062,19 @@
       </xs:restriction>
    </xs:simpleType>
    <xs:simpleType name="SignalForm">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="SinusWave"/>
-         <xs:enumeration value="SquareWave"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SignalInformationType">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Analog"/>
-         <xs:enumeration value="Digital"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SignalSubType">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="CAN">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p> Controller Area Network</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="LIN">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">Local Interconnect Network</xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="FlexRay"/>
-         <xs:enumeration value="MOST"/>
-         <xs:enumeration value="Ethernet"/>
-         <xs:enumeration value="BroadR-Reach"/>
-         <xs:enumeration value="RTPGE"/>
-         <xs:enumeration value="APIX">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Automotive Pixel Link</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="APIX2"/>
-         <xs:enumeration value="APIX3"/>
-         <xs:enumeration value="FBAS"/>
-         <xs:enumeration value="USB">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Universal Serial Bus Version 1.X: The "USB" literal represents all USB 1.X Versions for USB 2.0 or USB 3.X the corresponding literals shall be used.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="USB2">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Universal Serial Bus Version 2.0</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="USB3.X">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Universal Serial Bus Version 3.X</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="LVDS">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>low-voltage differential signalling</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="RGB"/>
-         <xs:enumeration value="BTLE">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Bluetooth Low Energy</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="NFC">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Near Field Communication</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="IEEE802.11">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">also: Wi-Fi, Wireless LAN</xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="SignalGround"/>
-         <xs:enumeration value="PowerGround"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SignalTransmissionMediumType">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Electrical"/>
-         <xs:enumeration value="Optical"/>
-         <xs:enumeration value="Hydraulic"/>
-         <xs:enumeration value="Pneumatic"/>
-         <xs:enumeration value="Acoustic"/>
-         <xs:enumeration value="Inductive"/>
-         <xs:enumeration value="RadioTransmission">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Signal transmission via electromagnetic waves (e.g. Wi-Fi, 4G, 5G)</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SignalType">
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Information"/>
-         <xs:enumeration value="Energy"/>
-         <xs:enumeration value="Ground"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SlotGender">
       <xs:annotation>
@@ -13083,11 +12082,7 @@
             <p>Defines the gender of a slot.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Male"/>
-         <xs:enumeration value="Female"/>
-         <xs:enumeration value="Unspecified"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SlotSealingType">
       <xs:annotation>
@@ -13095,37 +12090,7 @@
             <p>Defines the possible sealing types for a slot, if the slot shall be sealed in its usage.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="None">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The<i>Slot</i>cannot be sealed at all.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="SingleSealing">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The<i>Slot</i>is sealed with a single<i>Seal</i>per<i>Cavity</i>e.g. a<i>CavitySeal</i>or a<i>CavityPlug.</i>
-                  </p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="MultiSealing">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The<i>Slot</i>is sealed with a more complex sealing variant, typically sealing multiple cavities with a single seal (e.g. a<i>MultiCavityPlug</i>or a combination of those).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Moulded">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The<i>Slot</i>is sealed by moulding it with some sort of sealing compound.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="SpliceType">
       <xs:annotation>
@@ -13133,22 +12098,7 @@
             <p>Enumeration for the definition of type of splice.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="InlineSplice">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>An inlineSplice is a splice where wires from both sides are connected.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="EndSplice">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>An endSplice is a splice where wires only from one side are connected.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="StatusOfApproval">
       <xs:annotation>
@@ -13156,11 +12106,7 @@
             <p>Enumeration for the definition of the state of an approval.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="NotYetApproved"/>
-         <xs:enumeration value="Approved"/>
-         <xs:enumeration value="Withdrawn"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="TapingDirection">
       <xs:annotation>
@@ -13179,36 +12125,7 @@
             <p>Defines the possible sealing types for a terminal, if the terminal shall be sealed in its usage.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="None">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The Terminal cannot be sealed by itself (e.g. a CavitySeal)</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Sealed">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The Terminal can be sealed and can only be used together with a cavity seal. It is not allowed to be used unsealed.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Neutral">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The terminal can be sealed (with a cavity seal), but a seal is not mandatory for this terminal.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Moulded">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The terminal can be used in a moulded slot.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="TopologyZoneType">
       <xs:annotation>
@@ -13216,10 +12133,7 @@
             <p>There can be various reasons to define TopologyZones. These can be differentiated with these type literals.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="DmuZone"/>
-         <xs:enumeration value="EnvironmentZone"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="TubeShape">
       <xs:annotation>
@@ -13227,22 +12141,7 @@
             <p>Defines valid shapes of the cross section of a tube.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Circular">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The tube has circular cross section.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="NonCircular">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The tube has a cross section that is not circular.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="TubeSlitStyle">
       <xs:annotation>
@@ -13250,43 +12149,7 @@
             <p>Defines valid types / styles of a slitted tube.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Slit">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The tube has just a simple slit.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="SelfClosing">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The slit of the tube is self-closing.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Closable">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The slit can be closed manually.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Overlapping">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The edges of the slit are overlapping.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="TwoParts">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Two-parted tubes consist of inner tube and an outer tube (normally defined as one<i>PartNumber)</i>. Both tubes are slit and are combined into each other during assembly, thus creating one closed tube.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="TypeOfPermission">
       <xs:annotation>
@@ -13294,11 +12157,7 @@
             <p>Enumeration for the definition of the type of a permission.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Seen"/>
-         <xs:enumeration value="Checked"/>
-         <xs:enumeration value="Released"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="USUnitName">
       <xs:annotation>
@@ -13358,31 +12217,7 @@
             </p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="ECU"/>
-         <xs:enumeration value="Sensor"/>
-         <xs:enumeration value="Actuator"/>
-         <xs:enumeration value="CouplingDevice"/>
-         <xs:enumeration value="EnergyStorage"/>
-         <xs:enumeration value="Generator"/>
-         <xs:enumeration value="PowerDistribution"/>
-         <xs:enumeration value="Switch"/>
-         <xs:enumeration value="Lamp"/>
-         <xs:enumeration value="Relay"/>
-         <xs:enumeration value="Fuse"/>
-         <xs:enumeration value="Ground">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>Defines that this ComponentNode is a grounding point.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Splice"/>
-         <xs:enumeration value="Protection"/>
-         <xs:enumeration value="Fixing"/>
-         <xs:enumeration value="Grommet"/>
-         <xs:enumeration value="CableDuct"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="ValueDetermination">
       <xs:annotation>
@@ -13420,15 +12255,7 @@
             <p>Defines valid values for the type of VariantGroups.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Family">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>A group with the type "Family" defines a set of variant codes that are mutually exclusive, and a valid configuration has to choose one variant code from the group.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="VecVersion">
       <xs:restriction base="xs:string">
@@ -13436,6 +12263,7 @@
          <xs:enumeration value="1.1.2"/>
          <xs:enumeration value="1.1.3"/>
          <xs:enumeration value="1.2.0"/>
+         <xs:enumeration value="1.2.1"/>
       </xs:restriction>
    </xs:simpleType>
    <xs:simpleType name="WindingFirmness">
@@ -13444,22 +12272,7 @@
             <p>Defines the firmness with which a tape is applied to a segment.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Limp">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p> The taping is applied limp (loose taping).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Tight">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The taping is applied tight.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="WindingType">
       <xs:annotation>
@@ -13467,56 +12280,7 @@
             <p> Defines the type of taping.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="OnSpace">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>OnSpace</i>describes a taping with gaps between the rounds (German: Luecke)</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Spare">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>Spare</i>describes a taping with larger gaps between the rounds (German: Spar)</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Overlap">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>Overlap</i>describes a taping where each round overlaps the preceeding round.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="DoubleOverlap">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>DoubleOverlap</i>describes a taping where each round overlaps the preceeding round and the taping is done twice (forward and backwards).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Spiral">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>Spiral</i>defines a taping with the least overlapping (German: Spiral).</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Longitudinal">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>
-                     <i>Longitudinal</i>defines a taping with where the tape is folded around a segment.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="WireAddOnType">
       <xs:annotation>
@@ -13524,22 +12288,7 @@
             <p>Specifies possible values for the t<i>ype</i>of wire add-ons (e.g.<i>CavityAddOn</i>). </p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Contract">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The agreed add-on for any negotiations and calculations.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Production">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The add-on length for the use in production environments.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="WireElementShape">
       <xs:annotation>
@@ -13547,11 +12296,7 @@
             <p>Defines the shape of a wire element.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Circular"/>
-         <xs:enumeration value="Flat"/>
-         <xs:enumeration value="Elliptical"/>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="WireLengthType">
       <xs:annotation>
@@ -13559,36 +12304,7 @@
             <p>Specifies possible values for the<i>lengthType</i>of<i>WireLength</i>.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="DMU">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The length of the wire is calculated from the sum of the lengths of the neutral axes of the corresponding segments in the DMU model.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Drawing">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The length is rounded length from the DMU model (shown on the drawing), without any add-ons</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Contract">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The agreed length for any negotiations and calculations.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-         <xs:enumeration value="Production">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p>The cutting length for the used in production environments.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
    <xs:simpleType name="WireReceptionType">
       <xs:annotation>
@@ -13596,20 +12312,6 @@
             <p>The<i>WireReceptionType</i>defines in an<i>OpenEnumeration</i>how a wire is joined with a wire reception.</p>
          </xs:documentation>
       </xs:annotation>
-      <xs:restriction base="xs:string">
-         <xs:enumeration value="Crimp"/>
-         <xs:enumeration value="Soldering"/>
-         <xs:enumeration value="PlasmaSoldering"/>
-         <xs:enumeration value="SpotResistentWelding"/>
-         <xs:enumeration value="FrictionWelding"/>
-         <xs:enumeration value="UltraSonicWelding"/>
-         <xs:enumeration value="UltraSonicCompactation">
-            <xs:annotation>
-               <xs:documentation xml:lang="en">
-                  <p> UltraSonicCompactation, typically used for aluminium wires.</p>
-               </xs:documentation>
-            </xs:annotation>
-         </xs:enumeration>
-      </xs:restriction>
+      <xs:restriction base="xs:string"/>
    </xs:simpleType>
 </xs:schema>
