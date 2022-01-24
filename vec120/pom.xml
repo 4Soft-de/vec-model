@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.foursoft.vecmodel</groupId>
         <artifactId>vec-parent</artifactId>
-        <version>1.4.4</version>
+        <version>1.5.0</version>
     </parent>
     <artifactId>vec120</artifactId>
 
@@ -90,10 +90,10 @@
                         <configuration>
                             <encoding>UTF-8</encoding>
                             <schemaIncludes>
-                                <include>vec120/vec_1.2.1.RC-SNAPSHOT.xsd</include>
+                                <include>vec122/vec_1.2.2.xsd</include>
                             </schemaIncludes>
                             <bindingIncludes>
-                                <include>vec120/*.xjb</include>
+                                <include>vec122/*.xjb</include>
                             </bindingIncludes>
                             <args>
                                 <arg>-Xannotate</arg>
