@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * vec-common
+ * vec120
  * %%
  * Copyright (C) 2020 - 2022 4Soft GmbH
  * %%
@@ -23,13 +23,13 @@
  * THE SOFTWARE.
  * =========================LICENSE_END==================================
  */
-package com.foursoft.vecmodel.common;
+package com.foursoft.vecmodel.vec120;
 
 import java.util.List;
 
 @FunctionalInterface
-public interface HasDescription<T> {
+public interface HasOccurrenceOrUsages {
 
-    List<T> getDescriptions();
+    List<VecOccurrenceOrUsage> getOccurrenceOrUsage();
 
 }

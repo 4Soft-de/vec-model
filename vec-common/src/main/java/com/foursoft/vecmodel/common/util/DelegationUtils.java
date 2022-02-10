@@ -1,8 +1,8 @@
 /*-
  * ========================LICENSE_START=================================
- * vec113
+ * vec-common
  * %%
- * Copyright (C) 2020 4Soft GmbH
+ * Copyright (C) 2020 - 2022 4Soft GmbH
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,14 +27,19 @@ package com.foursoft.vecmodel.common.util;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DelegationUtils {
 
     public static <T extends X, X> List<T> getFromListWithType(final List<X> source, final Class<T> type) {
+        return getFromListWithTypeAsStream(source, type)
+                .collect(Collectors.toList());
+    }
+
+    public static <T extends X, X> Stream<T> getFromListWithTypeAsStream(final List<X> source, final Class<T> type) {
         return source.stream()
                 .filter(type::isInstance)
-                .map(type::cast)
-                .collect(Collectors.toList());
+                .map(type::cast);
     }
 
 }

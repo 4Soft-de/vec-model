@@ -25,11 +25,32 @@
  */
 package com.foursoft.vecmodel.common;
 
+import com.foursoft.vecmodel.common.util.DelegationUtils;
+import com.foursoft.vecmodel.common.util.StreamUtils;
+
 import java.util.List;
+import java.util.Optional;
 
 @FunctionalInterface
-public interface HasDescription<T> {
+public interface HasCustomProperties<X extends HasPropertyType> {
 
-    List<T> getDescriptions();
+    List<X> getCustomProperties();
+
+    default <T extends X> List<T> getCustomPropertiesWithType(final Class<T> type) {
+        return DelegationUtils.getFromListWithType(getCustomProperties(), type);
+    }
+
+    /**
+     * Filters the list of CustomProperties by type and key.
+     *
+     * @param type         derived classifiers
+     * @param propertyType defines the meaning of the value.
+     * @return the first property with the given type and key.
+     */
+    default <T extends X> Optional<T> getCustomProperty(final Class<T> type, final String propertyType) {
+        return DelegationUtils.getFromListWithTypeAsStream(getCustomProperties(), type)
+                .filter(c -> c.getPropertyType().equals(propertyType))
+                .collect(StreamUtils.findOneOrNone());
+    }
 
 }

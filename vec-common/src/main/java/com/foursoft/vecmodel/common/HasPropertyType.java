@@ -25,11 +25,9 @@
  */
 package com.foursoft.vecmodel.common;
 
-import java.util.List;
-
 @FunctionalInterface
-public interface HasDescription<T> {
+public interface HasPropertyType {
 
-    List<T> getDescriptions();
+    String getPropertyType();
 
 }
