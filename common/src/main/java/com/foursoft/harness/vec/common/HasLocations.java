@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * vec-v113
+ * vec-common
  * %%
  * Copyright (C) 2020 - 2022 4Soft GmbH
  * %%
@@ -23,15 +23,35 @@
  * THE SOFTWARE.
  * =========================LICENSE_END==================================
  */
-open module com.foursoft.harness.vec.v113 {
-    requires transitive com.foursoft.harness.vec.common;
-    requires com.foursoft.jaxb.navext.runtime;
+package com.foursoft.harness.vec.common;
 
-    requires java.xml;
-    requires java.xml.bind;
-    requires java.annotation;
+import com.foursoft.harness.vec.common.util.DelegationUtils;
+import com.foursoft.harness.vec.common.util.StreamUtils;
 
-    exports com.foursoft.harness.vec.v113;
-    exports com.foursoft.harness.vec.v113.visitor;
-    exports com.foursoft.harness.vec.v113.validation;
+import java.util.List;
+import java.util.Optional;
+
+@FunctionalInterface
+public interface HasLocations<X> {
+
+    List<X> getLocations();
+
+    default <T extends X> List<T> getLocationsWithType(final Class<T> type) {
+        return DelegationUtils.getFromListWithType(getLocations(), type);
+    }
+
+    /**
+     * Gets the first location with the given type.
+     * <b>Warning: There might be multiple locations with the given type.
+     * Only use this method if you are sure there will just be one element!</b>
+     *
+     * @param type Class of T.
+     * @param <T>  Type of Location to filter for.
+     * @return The first location with the given type if found, else an empty optional.
+     */
+    default <T extends X> Optional<T> getLocationWithType(final Class<T> type) {
+        return DelegationUtils.getFromListWithTypeAsStream(getLocations(), type)
+                .collect(StreamUtils.findOneOrNone());
+    }
+
 }
