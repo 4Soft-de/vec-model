@@ -1,6 +1,6 @@
 /*-
  * ========================LICENSE_START=================================
- * vec-v12x
+ * vec-v2x
  * %%
  * Copyright (C) 2020 - 2022 4Soft GmbH
  * %%
@@ -23,13 +23,13 @@
  * THE SOFTWARE.
  * =========================LICENSE_END==================================
  */
-package com.foursoft.harness.vec.v12x.navigations;
+package com.foursoft.harness.vec.v2x.navigations;
 
 import com.foursoft.harness.vec.common.annotations.RequiresBackReferences;
 import com.foursoft.harness.vec.common.util.StreamUtils;
 import com.foursoft.harness.vec.common.util.StringUtils;
-import com.foursoft.harness.vec.v12x.*;
-import com.foursoft.harness.vec.v12x.visitor.ReferencedNodeLocationVisitor;
+import com.foursoft.harness.vec.v2x.*;
+import com.foursoft.harness.vec.v2x.visitor.ReferencedNodeLocationVisitor;
 
 import java.util.ArrayList;
 import java.util.Collection;
